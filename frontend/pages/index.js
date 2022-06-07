@@ -12,9 +12,9 @@ const fetcher = (url) => axios.get(url).then((res) => res.data);
 export default function Home() {
   const { data: products, error } = useSWR("/api/products", fetcher);
 
-  // if (error) return <div>failed to load</div>;
+  if (error) return <div>failed to load</div>;
 
-  // if (!products) return <div>loading...</div>;
+  if (!products) return <div>loading...</div>;
 
   console.log(products);
 
@@ -30,39 +30,25 @@ export default function Home() {
       <main className={styles.main}>
         <h1 className={styles.title}>Art store</h1>
 
-        <p className={styles.description}>Shop arts from artists in Darwin.</p>
+        <p className={styles.description}>Buy Art Online.</p>
 
         <div className={styles.grid}>
           {/* Products */}
-          <div>{JSON.stringify(products)}</div>
-
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Name &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          {products.map((product) => (
+            <div key={product.id} className={styles.card}>
+              <Image
+                src={product.image}
+                alt={product.name}
+                width={500}
+                height={500}
+              />
+              <div className={styles.productInfo}>
+                <h2>{product.name}</h2>
+                <p>{product.description}</p>
+                <p>${product.price}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </main>
 
