@@ -22,13 +22,20 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/products', [ProductController::class, 'index']); 
 Route::get('/products/{id}', [ProductController::class, 'show']); 
 
+// test apis: temp public access
+Route::post('/products', [ProductController::class, 'store']);
+Route::put('products/{id}', [ProductController::class, 'update']);
+Route::post('/logout', [AuthController::class, 'logout']); 
+Route::delete('products/{id}', [ProductController::class, 'destroy']);
+
 // Protected routes: only authenticated users can access with token
 Route::group(['middleware'=>['auth:sanctum']], function(){
     
-    Route::post('/products', [ProductController::class, 'store']);
-    Route::put('products/{id}', [ProductController::class, 'update']);
-    Route::post('/logout', [AuthController::class, 'logout']); 
-    Route::delete('products/{id}', [ProductController::class, 'destroy']);
+    
+    // Route::post('/products', [ProductController::class, 'store']);
+    // Route::put('products/{id}', [ProductController::class, 'update']);
+    // Route::post('/logout', [AuthController::class, 'logout']); 
+    // Route::delete('products/{id}', [ProductController::class, 'destroy']);
 
 });
 
