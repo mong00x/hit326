@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import styles from "../styles/Home.module.css";
 import Nav from "../components/navbar";
 import React from "react";
@@ -8,8 +9,12 @@ import useSWR from "swr";
 
 import axios from "../lib/axios";
 
+import { useRouter } from "next/router";
+
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 export default function Home() {
+  const router = useRouter();
+  const { pid } = router.query;
   const { data: products, error } = useSWR("/api/products", fetcher);
 
   if (error) return <div>failed to load</div>;
@@ -36,33 +41,28 @@ export default function Home() {
           {/* Products */}
           {products.map((product) => (
             <div key={product.id} className={styles.card}>
-              <Image
-                src={product.image}
-                alt={product.name}
-                width={500}
-                height={500}
-              />
-              <div className={styles.productInfo}>
-                <h2>{product.name}</h2>
-                <p>{product.description}</p>
-                <p>${product.price}</p>
-              </div>
+              <Link href="/product/[id]" as={`/product/${product.id}`}>
+                <a>
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    width={500}
+                    height={500}
+                  />
+                  <div className={styles.productInfo}>
+                    <h2>{product.name}</h2>
+                    <p>{product.description}</p>
+                    <p>${product.price}</p>
+                  </div>
+                </a>
+              </Link>
             </div>
           ))}
         </div>
       </main>
 
       <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
+        <p>HIT326 | Coded by Meng</p>
       </footer>
     </div>
   );
