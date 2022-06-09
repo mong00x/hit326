@@ -17,7 +17,8 @@ import {
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
-// import { useAuth } from "../hooks/auth";
+import { useAuth } from "../hooks/auth";
+import Cart from "../components/cart";
 
 const NavLink = () => (
   <Link
@@ -37,7 +38,7 @@ const NavLink = () => (
 export default function Nav() {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  // const { user } = useAuth({ middleware: "guest" });
+  const { user } = useAuth({ middleware: "guest" });
   return (
     <div className="fixed min-w-full">
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -45,13 +46,14 @@ export default function Nav() {
           <Link href="/">Art Store</Link>
 
           <Flex alignItems={"center"}>
-            <Stack direction={"row"} spacing={7}>
+            <Stack direction={"row"} spacing={7} alignItems={"center"}>
               <Button onClick={toggleColorMode}>
                 {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
               </Button>
-
+              <Cart />
               <Menu>
-                {/* {user ? (
+                {/* get user, if user logedin show dashboard, else show login and register */}
+                {user ? (
                   <MenuButton
                     as={Button}
                     rounded={"full"}
@@ -60,16 +62,12 @@ export default function Nav() {
                     minW={0}
                   ></MenuButton>
                 ) : (
-                  <>
+                  <Box height="full">
                     <Link href="/login">
-                      <a>Login</a>
+                      <a>Admin Login</a>
                     </Link>
-
-                    <Link href="/register" mx={4}>
-                      <a>Register</a>
-                    </Link>
-                  </>
-                )} */}
+                  </Box>
+                )}
                 <MenuList alignItems={"center"}>
                   <br />
                   <Center>
