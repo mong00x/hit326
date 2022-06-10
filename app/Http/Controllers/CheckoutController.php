@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\Checkout;
 
-class ProductController extends Controller
+class CheckoutController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::all(); // Get all products
+        return Checkout::all(); // Get all checkouts
     }
 
     /**
@@ -26,13 +26,11 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'image' => 'required',
-            'price' => 'required',
-            'is_available' => 'required'
+            'customer_email' => 'required',
+            'date'=> 'required',
+            'status' => 'required'
         ]);
-        return Product::create($request->all()); // Create a new product as requested
+        return Checkout::create($request->all()); // Create a new checkout as requested
         
     }
 
@@ -44,8 +42,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product=Product::find($id);
-        return $product; // Get a product by id
+        $checkout=Checkout::find($id);
+        return $checkout; // Get a checkout by id
     }
 
     /**
@@ -57,11 +55,11 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // PUT /products/{id}
-        $product=Product::find($id);
-        $product->update($request->all()); 
+        // PUT /checkouts/{id}
+        $checkout=Checkout::find($id);
+        $checkout->update($request->all());
 
-        return $product;
+        return $checkout;
     }
 
     /**
@@ -72,6 +70,10 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        return Product::find($id)->delete();
+        // DELETE /checkouts/{id}
+        $checkout=Checkout::find($id);
+        $checkout->delete();
+
+        return $checkout;
     }
 }

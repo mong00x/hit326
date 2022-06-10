@@ -25,6 +25,8 @@ const product = () => {
 
   if (!product) return <div>loading...</div>;
 
+  if (!product.is_active) return <div>Product is not available</div>;
+
   return (
     <>
       <Nav />

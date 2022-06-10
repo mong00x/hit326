@@ -21,7 +21,7 @@ const GlobalState = (props) => {
     setTimeout(() => {
       // setCart(updatedCart);
       dispatch({ type: REMOVE_PRODUCT, productId: productId });
-    }, 100);
+    }, 700);
   };
 
   return (

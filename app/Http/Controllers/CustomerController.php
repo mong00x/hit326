@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class customerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return Product::all(); // Get all products
+        return Customer::all(); // Get all customers
     }
 
     /**
@@ -26,13 +26,18 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'image' => 'required',
-            'price' => 'required',
-            'is_available' => 'required'
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'title' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'postcode' => 'required',
+            'country' => 'required',
+            'phone' => 'required',
+            'email' => 'required',
         ]);
-        return Product::create($request->all()); // Create a new product as requested
+        return Customer::create($request->all()); // Create a new customer as requested
         
     }
 
@@ -44,8 +49,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product=Product::find($id);
-        return $product; // Get a product by id
+        $customer=Customer::find($id);
+        return $customer; // Get a customer by id
     }
 
     /**
@@ -57,11 +62,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // PUT /products/{id}
-        $product=Product::find($id);
-        $product->update($request->all()); 
-
-        return $product;
+        //
     }
 
     /**
@@ -72,6 +73,9 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        return Product::find($id)->delete();
+        // PUT /customers/{id}
+        $customer=Customer::find($id);
+        $customer->delete(); // Delete a customer by id
+        return $customer;
     }
 }

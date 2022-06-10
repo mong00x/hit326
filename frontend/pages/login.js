@@ -26,6 +26,7 @@ const login = () => {
     //  check if user is logged in
     if (router.query.reset?.length > 0) {
       setStatus(atob(router.query.reset));
+      console.log(atob(router.query.reset));
     } else {
       setStatus(null);
     }

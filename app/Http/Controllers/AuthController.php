@@ -26,7 +26,7 @@ class AuthController extends Controller
         ], 201); // 201 status code for created
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
         auth()->user()->tokens->each(function ($token, $key) {
             $token->delete();

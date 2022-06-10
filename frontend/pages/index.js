@@ -15,13 +15,6 @@ import { useRouter } from "next/router";
 
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 export default function Home() {
-  // const [cart, setCart] = useState([]);
-  // const addToCart = (product) => {
-  //   setCart([...cart, product]);
-  // };
-
-  const router = useRouter();
-  const { pid } = router.query;
   const { data: products, error } = useSWR("/api/products", fetcher);
 
   if (error) return <div>failed to load</div>;
@@ -48,20 +41,21 @@ export default function Home() {
               {/* Products */}
               {products.map((product) => (
                 <div key={product.id} className={styles.card}>
-                  {/* <Link href="/product/[id]" as={`/product/${product.id}`}> */}
-                  <a>
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      width={500}
-                      height={500}
-                    />
-                    <div className={styles.productInfo}>
-                      <h2>{product.name}</h2>
-                      <p>{product.description}</p>
-                      <p>${product.price}</p>
-                    </div>
-                  </a>
+                  <Link href="/product/[id]" as={`/product/${product.id}`}>
+                    <a>
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        width={500}
+                        height={500}
+                      />
+                      <div className={styles.productInfo}>
+                        <h2>{product.name}</h2>
+                        <p>{product.description}</p>
+                        <p>${product.price}</p>
+                      </div>
+                    </a>
+                  </Link>
                   <Button
                     onClick={() => {
                       context.addProductToCart(product);
@@ -69,7 +63,6 @@ export default function Home() {
                   >
                     Add to cart
                   </Button>
-                  {/* </Link> */}
                 </div>
               ))}
             </div>

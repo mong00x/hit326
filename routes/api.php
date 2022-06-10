@@ -1,6 +1,10 @@
 <?php
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CheckoutController;
+// TODO: use App\Http\Controllers\OrderController;
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,11 +20,16 @@ use Illuminate\Support\Facades\Route;
 */
 // Public routes: anyone can access these routes
 // Route::resource('products', ProductController::class);
+
 // Route::put('products/{id}', [ProductController::class, 'update']);
 Route::post('/register', [AuthController::class, 'register']); 
 Route::post('/login', [AuthController::class, 'login']); 
+Route::post('/checkout', [CheckoutController::class, 'store']); 
+
 Route::get('/products', [ProductController::class, 'index']); 
 Route::get('/products/{id}', [ProductController::class, 'show']); 
+
+// TODO: checkout -> order Route::resource('order', OrderController::class); Order CRUD
 
 
 // test apis: temp public access
@@ -28,8 +37,6 @@ Route::get('/products/{id}', [ProductController::class, 'show']);
 
 // Protected routes: only authenticated users(admins) can access with token
 Route::group(['middleware'=>['auth:sanctum']], function(){
-    
-    
     Route::post('/products', [ProductController::class, 'store']);
     Route::put('products/{id}', [ProductController::class, 'update']);
     Route::post('/logout', [AuthController::class, 'logout']); 

@@ -1,6 +1,11 @@
 import Head from "next/head";
+import useAuth from "../hooks/auth";
 
 const Dashboard = () => {
+  const logout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
   return (
     <div>
       <Head>
@@ -9,6 +14,7 @@ const Dashboard = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <h1>Dashboard</h1>
+      <button onClick={logout}>Logout</button>
     </div>
   );
 };
