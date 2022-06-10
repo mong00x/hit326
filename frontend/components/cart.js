@@ -1,5 +1,6 @@
 import React, { useRef, useState, useContext, useEffect } from "react";
 import Context from "../context/context";
+import Link from "next/link";
 import Image from "next/image";
 import {
   useOutsideClick,
@@ -37,6 +38,7 @@ const Cart = () => {
         <Text ml={2}>
           (
           {context.cart.reduce((count, curItem) => {
+            // count the number of items in cart
             return count + curItem.quantity;
           }, 0)}
           )
@@ -76,7 +78,7 @@ const Cart = () => {
               ))}
             </ul>
             <Button mt={12} colorScheme="blue">
-              Check out
+              <Link href="/checkout">Checkout</Link>
             </Button>
           </DrawerBody>
         </DrawerContent>
