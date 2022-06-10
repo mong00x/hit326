@@ -6,20 +6,20 @@ import { useRouter } from "next/router";
 export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
   const router = useRouter();
 
-  const {
-    data: user,
-    error,
-    mutate,
-  } = useSWR("/api/user", () =>
-    axios
-      .get("/api/user")
-      .then((res) => res.data)
-      .catch((error) => {
-        if (error.response.status !== 409) throw error;
+  // const {
+  //   data: user,
+  //   error,
+  //   mutate,
+  // } = useSWR("/api/user", () =>
+  //   axios
+  //     .get("/api/user")
+  //     .then((res) => res.data)
+  //     .catch((error) => {
+  //       if (error.response.status !== 409) throw error;
 
-        router.push("/verify-email");
-      })
-  );
+  //       router.push("/verify-email");
+  //     })
+  // );
 
   const csrf = () => axios.get("/sanctum/csrf-cookie");
 
@@ -102,14 +102,14 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     window.location.pathname = "/login";
   };
 
-  useEffect(() => {
-    if (middleware === "guest" && redirectIfAuthenticated && user)
-      router.push(redirectIfAuthenticated);
-    if (middleware === "auth" && error) logout();
-  }, [user, error]);
+  // useEffect(() => {
+  //   if (middleware === "guest" && redirectIfAuthenticated && user)
+  //     router.push(redirectIfAuthenticated);
+  //   if (middleware === "auth" && error) logout();
+  // }, [user, error]);
 
   return {
-    user,
+    // user,
     register,
     login,
     forgotPassword,
